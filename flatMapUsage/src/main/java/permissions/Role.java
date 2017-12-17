@@ -7,6 +7,11 @@ public class Role {
     private String name;
     private Set<Permission> permissions = EnumSet.noneOf(Permission.class);
 
+    public Role(String name, Set<Permission> permissions) {
+        this.name = name;
+        this.permissions = permissions;
+    }
+
     public String getName() {
         return name;
     }

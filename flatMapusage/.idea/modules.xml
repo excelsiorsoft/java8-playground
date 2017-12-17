@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/flatMap-usage.iml" filepath="$PROJECT_DIR$/flatMap-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flatMapusage.iml" filepath="$PROJECT_DIR$/flatMapusage.iml" />
     </modules>
   </component>
 </project>

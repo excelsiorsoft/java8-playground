@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="flatMap-usage" />
+        <module name="flatMapusage" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="flatMap-usage" target="1.5" />
+      <module name="flatMapusage" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

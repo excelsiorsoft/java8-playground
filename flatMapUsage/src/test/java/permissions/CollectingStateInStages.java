@@ -1,11 +1,17 @@
 package permissions;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
 
 public class CollectingStateInStages {
+
+    private static List<User> users;
 
     @BeforeClass
     public static void setUp() {
@@ -52,7 +58,43 @@ public class CollectingStateInStages {
         User peter = new User(3, "Peter", 34);
         peter.setRoles(petersRoles);
 
+        users = new ArrayList<>();
+        users.add(sarah);
+        users.add(david);
+        users.add(peter);
+    }
+
+    @Test
+    public void test(){
+
+            Map<String, Set<User>> editors = users.stream()
+                    .flatMap(u -> u.getRoles().stream()
+                            .filter(r -> r.getPermissions().contains(Permission.EDIT))
+                            .map(r -> new Tuple<>(r, u))
+                    ).collect(groupingBy(p -> p.getKey().getName(),
+                            mapping(Tuple::getValue, toSet())));
+
+            System.out.println(editors);
 
 
+
+    }
+
+    class Tuple<K, V> {
+        private final K key;
+        private final V value;
+
+        Tuple(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        K getKey() {
+            return key;
+        }
+
+        V getValue() {
+            return value;
+        }
     }
 }

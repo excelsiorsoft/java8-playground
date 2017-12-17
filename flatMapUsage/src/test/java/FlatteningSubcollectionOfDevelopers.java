@@ -10,7 +10,7 @@ import org.junit.Test;
 
 
 
-public class FlatMapTest {
+public class FlatteningSubcollectionOfDevelopers {
 
     private static List<Developer> team;
     private static Developer polyglot;

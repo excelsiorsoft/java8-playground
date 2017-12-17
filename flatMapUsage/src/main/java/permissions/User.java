@@ -49,11 +49,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "\n\tUser{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", roles=" + roles +
-                '}';
+                ", \n\troles=" + roles +
+                '}'+"\n";
     }
 }

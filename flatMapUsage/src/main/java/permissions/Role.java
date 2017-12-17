@@ -29,14 +29,16 @@ public class Role {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return name.equals(((Role) o).name);
-    }
+    public String toString() {
+        /*return "\n\t\tRole{" +
+                "name='" + name + '\'' +
+                ", permissions=" + permissions +
+                '}';*/
 
-    @Override
-    public int hashCode() {
-        return name.hashCode();
+        return new StringBuilder("\n\t\tRole{")
+                .append("name='").append(name)
+                .append(", permissions=").append(permissions)
+                .append('}')
+                .toString();
     }
 }

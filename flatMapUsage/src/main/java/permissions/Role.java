@@ -1,3 +1,5 @@
+package permissions;
+
 import java.util.EnumSet;
 import java.util.Set;
 

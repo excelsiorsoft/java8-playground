@@ -1,10 +1,11 @@
-
+package developers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import static org.junit.Assert.assertTrue;
 
+import developers.Developer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

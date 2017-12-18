@@ -71,7 +71,7 @@ public class CollectingStateInStages {
                     .flatMap(u -> u.getRoles().stream()
                             .filter(r -> r.getPermissions().contains(Permission.EDIT))
                             .map(r -> new Tuple<>(r, u))
-                    ).collect(groupingBy(p -> "\n" + p.getKey().getName()+"\n\t",
+                    ).collect(groupingBy(role -> "\n" + role.getKey().getName()+"\n\t",
                             mapping(Tuple::getValue, toSet())));
 
             System.out.println(editors);

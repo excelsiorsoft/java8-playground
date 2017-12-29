@@ -3,11 +3,11 @@ package developers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import developers.Developer;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 
 
@@ -17,7 +17,7 @@ public class FlatteningSubcollectionOfDevelopers {
     private static Developer polyglot;
     private static Developer busy;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         team = new ArrayList<>();
         polyglot = new Developer("esoteric");

@@ -21,10 +21,8 @@ public class ObjectFactoryTest {
 	
 	@Test
 	public void construction() {
-		
 		Person personSupplier = ObjectFactory.bind(Person::new, "Simeon").get();
 		System.out.println(personSupplier);
-
 	}
 	
 	

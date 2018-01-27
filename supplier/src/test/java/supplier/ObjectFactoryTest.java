@@ -22,9 +22,14 @@ public class ObjectFactoryTest {
 	@Test
 	public void construction() {
 		
+<<<<<<< HEAD
 		Person personSupplier = ObjectFactory.bind(Person::new, "Simeon").get();
 		System.out.println(personSupplier);
 
+=======
+		System.out.println(cut.bind(Person::new, "Simeon").get());
+		
+>>>>>>> branch 'master' of https://github.com/excelsiorsoft/java8-playground.git
 	}
 	
 	

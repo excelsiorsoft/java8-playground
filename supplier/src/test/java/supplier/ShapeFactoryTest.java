@@ -13,10 +13,12 @@ public class ShapeFactoryTest {
 		Supplier<ShapeFactory> shapeFactory = ShapeFactory::new;
 		
 		// call draw method of circle
-		shapeFactory.get().getShape("circle").draw();
+		shapeFactory.get().createShape("circle").draw();
 		
 		// call draw method of Rectangle
-		shapeFactory.get().getShape("rectangle").draw();
+		shapeFactory.get().createShape("rectangle").draw();
+		
+		shapeFactory.get().createShape("square").draw();
 	}
 
 }

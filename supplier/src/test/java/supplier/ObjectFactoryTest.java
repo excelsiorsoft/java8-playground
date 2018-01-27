@@ -25,8 +25,5 @@ public class ObjectFactoryTest {
 		System.out.println(personSupplier);
 	}
 	
-	
-	
-
 
 }

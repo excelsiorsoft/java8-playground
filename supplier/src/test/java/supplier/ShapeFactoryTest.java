@@ -35,6 +35,7 @@ public class ShapeFactoryTest {
 		List<Shape> shapes = asList(Square::new, Rectangle::new, Circle::new);
 		System.out.println("list of shapes: " +shapes);
 		
+
 		
 		Shape square = Square::new;
 		System.out.println("square: "+square);
@@ -59,7 +60,6 @@ public class ShapeFactoryTest {
 		List<Shape> shapes = asList(Square::new, Rectangle::new, Circle::new);
 		Map<String, Shape> result = shapes.stream().collect(Collectors.toMap(Shape::name, Function.identity()));
 		System.out.println("list to map: " +result);
-		
 
 	}
 	

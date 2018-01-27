@@ -1,20 +1,18 @@
 package supplier;
 
 public class Person {
-	
-
 
 	private String name;
 
-	Person(String name){
+	Person(String name) {
 		this.name = name;
 	}
-	
-	//copy constructor
+
+	// copy constructor
 	public Person(Person p) {
-	    this.name = p.name;
+		this.name = p.name;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,6 +45,10 @@ public class Person {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Object getName() {
+		return this.name;
 	}
 
 }

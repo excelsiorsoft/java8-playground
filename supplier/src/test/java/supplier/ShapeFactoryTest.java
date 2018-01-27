@@ -66,15 +66,25 @@ public class ShapeFactoryTest {
 	
 	@Test
 	public void differentConstructors() {
-		
+
 		Person before = new Person("Grace Hopper");
-		//convert to list
-		List<Person>people = Stream.of(before)
-				/*Function<Person, Person> requires copy constructor*/
-				.map(Person::new).collect(Collectors.toList());
+
+		// convert to list
+		List<Person> people = Stream.of(before).collect(Collectors.toList());
 		Person after = people.get(0);
-		assertFalse(before == after);      
-		assertEquals(before, after);       
+
+		assertTrue(before == after);
+
+		before.setName("Grace Murray Hopper");
+		assertEquals("Grace Murray Hopper", after.getName());
+
+		// convert to list
+		people = Stream.of(before)
+				/* Function<Person, Person> requires copy constructor */
+				.map(Person::new).collect(Collectors.toList());
+		after = people.get(0);
+		assertFalse(before == after);
+		assertEquals(before, after);
 		before.setName("Rear Admiral Dr. Grace Murray Hopper");
 		assertFalse(before.equals(after));
 	}

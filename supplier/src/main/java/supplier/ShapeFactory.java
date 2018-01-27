@@ -6,19 +6,23 @@ import java.util.function.Supplier;
 
 import supplier.Shape.Circle;
 import supplier.Shape.Rectangle;
+import supplier.Shape.Square;
 
 public class ShapeFactory {
-	final static Map<String, Supplier<Shape>> map = new HashMap<>();
+	
+	final static Map<String, Supplier<Shape>> shapesByCriteria = new HashMap<>();
+	
 	static {
-		map.put("CIRCLE", Circle::new);
-		map.put("RECTANGLE", Rectangle::new);
+		shapesByCriteria.put(Circle.class.getSimpleName().toUpperCase(), Circle::new);
+		shapesByCriteria.put(Rectangle.class.getSimpleName().toUpperCase(), Rectangle::new);
+		shapesByCriteria.put(Square.class.getSimpleName().toUpperCase(), Square::new);
 	}
 
-	public Shape getShape(String shapeType) {
-		Supplier<Shape> shape = map.get(shapeType.toUpperCase());
+	public Shape createShape(String criteria) {
+		Supplier<Shape> shape = shapesByCriteria.get(criteria.toUpperCase());
 		if (shape != null) {
 			return shape.get();
 		}
-		throw new IllegalArgumentException("No such shape " + shapeType.toUpperCase());
+		throw new IllegalArgumentException("No such shape " + criteria.toUpperCase());
 	}
 }

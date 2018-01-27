@@ -68,3 +68,8 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/intellij
+/.metadata/
+/java8-playground.bat
+./bin
+.project
+RemoteSystemsTempFiles/*

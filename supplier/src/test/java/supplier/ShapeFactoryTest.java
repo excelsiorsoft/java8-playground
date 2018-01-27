@@ -1,13 +1,14 @@
 package supplier;
 
 import static java.util.Arrays.asList;
+import static org.junit.Assert.*;
 
-import java.awt.Choice;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -63,6 +64,19 @@ public class ShapeFactoryTest {
 
 	}
 	
-
+	@Test
+	public void differentConstructors() {
+		
+		Person before = new Person("Grace Hopper");
+		//convert to list
+		List<Person>people = Stream.of(before)
+				/*Function<Person, Person> requires copy constructor*/
+				.map(Person::new).collect(Collectors.toList());
+		Person after = people.get(0);
+		assertFalse(before == after);      
+		assertEquals(before, after);       
+		before.setName("Rear Admiral Dr. Grace Murray Hopper");
+		assertFalse(before.equals(after));
+	}
 
 }

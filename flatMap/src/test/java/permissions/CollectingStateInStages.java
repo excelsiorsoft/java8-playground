@@ -1,19 +1,24 @@
 package permissions;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
-import static java.util.stream.Collectors.toSet;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toSet;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class CollectingStateInStages {
 
     private static List<User> users;
 
-    @BeforeAll
+    //@BeforeAll
+    @BeforeClass
     public static void setUp() {
 
         Set<Permission> adminPermissions = new HashSet<>();

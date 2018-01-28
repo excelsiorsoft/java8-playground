@@ -1,5 +1,6 @@
 package supplier;
 
+@FunctionalInterface
 public interface Shape {
 	void draw();
 

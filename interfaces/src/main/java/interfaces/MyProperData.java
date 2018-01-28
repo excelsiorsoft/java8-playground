@@ -7,7 +7,7 @@ package interfaces;
  * @author Simeon
  *
  */
-public interface MyData {
+public interface MyProperData {
 
 	default void print(String str) {
 		if (!isNull(str)) {

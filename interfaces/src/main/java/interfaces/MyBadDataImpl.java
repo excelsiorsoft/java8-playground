@@ -1,6 +1,6 @@
 package interfaces;
 
-public class MyDataImpl implements MyData {
+public class MyBadDataImpl implements MyImproperData {
 
 	
 	public boolean isNull(String str) {
@@ -10,7 +10,7 @@ public class MyDataImpl implements MyData {
 	}
 	
 	public static void main(String args[]){
-		MyDataImpl obj = new MyDataImpl();
+		MyBadDataImpl obj = new MyBadDataImpl();
 		obj.print("");
 		obj.isNull("abc");
 	}

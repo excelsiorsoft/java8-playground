@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,15 +61,25 @@ public class PersonTest {
 	
 	@Test
 	public void varargConstructor() {
-		List<Person> names =  asList("Grace Hopper", "Barbara Liskov", "Ada Lovelace", "Karen Spärck Jones").
-		
+		List<Person> names =  
+		asList("Grace Hopper", "Barbara Liskov", "Ada Lovelace", "Karen Spärck Jones").
 		stream()
-			.map(name -> name.split(" "))
-			//String[] requires vararg constructor on Person
-			.map(Person::new)
-			.collect(Collectors.toList());
+		.map(name -> name.split(" "))
+		//String[] requires vararg constructor on Person
+		.map(Person::new)
+		.collect(Collectors.toList());
 
 		System.out.println("Varargs ctor, names=" + Arrays.asList(names));
+	}
+	
+	@Test public void toArray() {
+		List<String> names =  asList("Grace Hopper", "Barbara Liskov", "Ada Lovelace", "Karen Spärck Jones");
+				
+		Person[] people = names.stream()
+				.map(Person::new)
+				.toArray(Person[]::new);
+		
+		Stream.of(people).forEach(System.out::println);
 	}
 
 }

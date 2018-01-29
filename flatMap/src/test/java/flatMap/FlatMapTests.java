@@ -52,7 +52,7 @@ public class FlatMapTests {
 				.distinct()
 				.collect(Collectors.toSet());
 			
-			System.out.println(words.size() + ": "+ words);
+			System.out.println(words.size() + ": "+ words); 
 		
 
 		} catch (IOException ioe) {

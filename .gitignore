@@ -70,9 +70,7 @@ modules.xml
 # End of https://www.gitignore.io/api/intellij
 /.metadata/
 /java8-playground.bat
-<<<<<<< HEAD
 ./bin
 .project
 RemoteSystemsTempFiles/*
-=======
->>>>>>> branch 'master' of https://github.com/excelsiorsoft/java8-playground.git
+/java-8-data-processing-streams-collectors-optionals (1).zip

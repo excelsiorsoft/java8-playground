@@ -45,12 +45,22 @@ public class FlatMapTests {
 			 Stream<String> second = Files.lines(get(getSystemResource("flatMap/text2.txt").toURI()));
 			 Stream<String> third = Files.lines(get(getSystemResource("flatMap/text3.txt").toURI()));) {
 			 
-			Set<String> words = Stream.of(first, second, third)
+			Stream<String> wordStream = Stream.of(first, second, third)
+			.flatMap(Function.identity())
+			.flatMap(splitIntoWords)
+			.map(String::toLowerCase)
+			.distinct();
+			
+			Set<String> words = wordStream.collect(Collectors.toSet());
+			
+			//System.out.println(wordStream.count());
+			
+			/*Set<String> words = Stream.of(first, second, third)
 				.flatMap(Function.identity())
 				.flatMap(splitIntoWords)
 				.map(String::toLowerCase)
 				.distinct()
-				.collect(Collectors.toSet());
+				.collect(Collectors.toSet());*/
 			
 			System.out.println(words.size() + ": "+ words); 
 		

@@ -12,6 +12,7 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import io.vavr.Function2;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
@@ -185,8 +186,21 @@ public class VavrTests {
 		assertThat(that2._1).isEqualTo("vavr");
 		assertThat(that2._2).isEqualTo(1);
 		
-		String r = java8.apply((s, i) -> s.substring(2) + "vr"+ i / 8);
-		assertThat(r).hasToString("vavr1");
+		String r = java8.apply((s, i) -> s.substring(2) + "vr"+ i*3);
+		assertThat(r).hasToString("vavr24");
+	}
+	
+	@Test public void functions() {
+		
+		Function2<Integer, Integer, Integer> sum = (a, b) -> a + b;
+		assertThat(sum.apply(2,3)).isEqualTo(5);
+		
+		Function2<Integer, Integer, Integer> sum1 = Function2.of(this::methodAccepting2Params);
+		assertThat(sum1.apply(2,3)).isEqualTo(5);
+	}
+	
+	private int methodAccepting2Params(int a, int b) {
+		return a + b;
 	}
 
 }

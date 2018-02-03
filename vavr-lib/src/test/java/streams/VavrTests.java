@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.junit.Test;
+import org.junit.Test.None;
 
+import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
@@ -19,6 +21,7 @@ import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
 import io.vavr.collection.Stream;
 import io.vavr.control.Option;
+import io.vavr.control.Option.Some;
 
 public class VavrTests {
 
@@ -32,9 +35,9 @@ public class VavrTests {
 
 
 		Throwable thrown = catchThrowable(() -> {
-			assertThat(
+			
 					// Boom!
-					list.add("why not?"));
+					list.add("why not?");
 		});
 		
 		assertThat(thrown).isInstanceOf(UnsupportedOperationException.class).hasNoCause()
@@ -196,11 +199,68 @@ public class VavrTests {
 		
 		Function2<Integer, Integer, Integer> sum1 = Function2.of(this::methodAccepting2Params);
 		assertThat(sum1.apply(2,3)).isEqualTo(5);
+		
+		Function1<Integer, Integer> plusOne = a -> a + 1;
+		Function1<Integer, Integer> multiplyByTwo = a -> a * 2;
+
+		//function composition
+		Function1<Integer, Integer> add1AndMultiplyBy2 = plusOne.andThen(multiplyByTwo);
+
+		assertThat(add1AndMultiplyBy2.apply(2)).isEqualTo(6);
+		
+		Function1<Integer, Integer> add1AndMultiplyByTwo = multiplyByTwo.compose(plusOne);
+
+		assertThat(add1AndMultiplyByTwo.apply(2)).isEqualTo(6);
+		
+		//function lifting
+		Function2<Integer, Integer, Integer> divide = (a, b) -> a / b;
+		
+		Throwable thrown = catchThrowable(() -> {
+			divide.apply(4,0);
+					
+		});
+		
+		assertThat(thrown).isInstanceOf(java.lang.ArithmeticException.class).hasMessage("/ by zero");
+		
+		Function2<Integer, Integer, Option<Integer>> safeDivide = Function2.lift(divide);
+
+		// = None
+		Option<Integer> i1 = safeDivide.apply(1, 0); 
+		assertThat(i1).isNotInstanceOf(java.lang.ArithmeticException.class);
+		assertThat(i1).isInstanceOf(Option.None.class);
+
+		// = Some(2)
+		Option<Integer> i2 = safeDivide.apply(4, 2);
+		assertThat(i2).isInstanceOf(Option.Some.class);
+		
+		Throwable thrownIAE = catchThrowable(() -> {
+			partialSum(-1,2);
+					
+		});
+		
+		assertThat(thrownIAE).isInstanceOf(java.lang.IllegalArgumentException.class);
+		
+		Function2<Integer, Integer, Option<Integer>> partialSum = Function2.lift(this::partialSum);
+
+		// = None
+		Option<Integer> optionalResult = partialSum.apply(-1, 2); 
+		assertThat(optionalResult).isNotInstanceOf(java.lang.IllegalArgumentException.class);
+		assertThat(optionalResult).isInstanceOf(Option.None.class);
+		
 	}
 	
 	private int methodAccepting2Params(int a, int b) {
 		return a + b;
 
 	}
+	
+	private int partialSum(int first, int second) {
+	    if (first < 0 || second < 0) {
+	        throw new IllegalArgumentException("Only positive integers are allowed"); 
+	    }
+	    return first + second;
+	}
+	
+	
 
 }

@@ -208,6 +208,7 @@ public class VavrTests {
 
 		assertThat(add1AndMultiplyBy2.apply(2)).isEqualTo(6);
 		
+
 		Function1<Integer, Integer> add1AndMultiplyByTwo = multiplyByTwo.compose(plusOne);
 
 		assertThat(add1AndMultiplyByTwo.apply(2)).isEqualTo(6);
@@ -246,6 +247,7 @@ public class VavrTests {
 		Option<Integer> optionalResult = partialSum.apply(-1, 2); 
 		assertThat(optionalResult).isNotInstanceOf(java.lang.IllegalArgumentException.class);
 		assertThat(optionalResult).isInstanceOf(Option.None.class);
+
 		
 	}
 	
@@ -254,6 +256,7 @@ public class VavrTests {
 
 	}
 	
+
 	private int partialSum(int first, int second) {
 	    if (first < 0 || second < 0) {
 	        throw new IllegalArgumentException("Only positive integers are allowed"); 
@@ -261,6 +264,7 @@ public class VavrTests {
 	    return first + second;
 	}
 	
+
 	
 
 }

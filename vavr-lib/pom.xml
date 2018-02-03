@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.excelsiorsoft.java8-playground</groupId>
-	<artifactId>streams-usage</artifactId>
+	<artifactId>vavr-lib</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<build>
 		<plugins>

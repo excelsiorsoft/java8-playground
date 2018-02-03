@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-//import java.util.List;
 import java.util.TreeMap;
 
 import org.junit.Test;
@@ -19,7 +18,6 @@ import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
 import io.vavr.collection.Stream;
-
 import io.vavr.control.Option;
 
 public class VavrTests {
@@ -188,6 +186,7 @@ public class VavrTests {
 		
 		String r = java8.apply((s, i) -> s.substring(2) + "vr"+ i*3);
 		assertThat(r).hasToString("vavr24");
+
 	}
 	
 	@Test public void functions() {
@@ -201,6 +200,7 @@ public class VavrTests {
 	
 	private int methodAccepting2Params(int a, int b) {
 		return a + b;
+
 	}
 
 }

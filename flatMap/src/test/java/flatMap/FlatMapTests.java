@@ -53,7 +53,7 @@ public class FlatMapTests {
 			
 			Set<String> words = wordStream.collect(Collectors.toSet());
 			
-			System.out.println(wordStream.count());
+			//System.out.println(words.count());
 			
 			/*Set<String> words = Stream.of(first, second, third)
 				.flatMap(Function.identity())

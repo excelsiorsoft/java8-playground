@@ -184,6 +184,9 @@ public class VavrTests {
 		
 		assertThat(that2._1).isEqualTo("vavr");
 		assertThat(that2._2).isEqualTo(1);
+		
+		String r = java8.apply((s, i) -> s.substring(2) + "vr"+ i / 8);
+		assertThat(r).hasToString("vavr1");
 	}
 
 }

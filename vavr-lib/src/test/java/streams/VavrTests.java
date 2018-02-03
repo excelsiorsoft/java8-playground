@@ -7,13 +7,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import org.junit.Test;
 import org.junit.Test.None;
 
+import io.vavr.Function0;
 import io.vavr.Function1;
 import io.vavr.Function2;
+import io.vavr.Function3;
+import io.vavr.Function5;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
@@ -22,6 +26,7 @@ import io.vavr.collection.Queue;
 import io.vavr.collection.Stream;
 import io.vavr.control.Option;
 import io.vavr.control.Option.Some;
+import junit.framework.Assert;
 
 public class VavrTests {
 
@@ -249,6 +254,75 @@ public class VavrTests {
 		assertThat(optionalResult).isInstanceOf(Option.None.class);
 
 		
+	}
+	
+	@Test public void functions1() {
+		
+		//memoization
+		Function0<Double> hashCache =
+		        Function0.of(Math::random).memoized();
+
+		double randomValue1 = hashCache.apply();
+		double randomValue2 = hashCache.apply();
+
+		assertThat(randomValue1).isEqualTo(randomValue2);
+		
+		//patial application
+		Function2<Integer, Integer, Integer> sum = (a, b) -> a + b;
+		Function1<Integer, Integer> add2 = sum.apply(2); 
+
+		assertThat(add2.apply(4)).isEqualTo(6);
+		
+		Function5<Integer, Integer, Integer, Integer, Integer, Integer> add = (a, b, c, d, e) -> a + b + c + d + e;
+		Function2<Integer, Integer, Integer> add3 = add.apply(2, 3, 1); 
+
+		assertThat(add3.apply(4, 3)).isEqualTo(13);
+		
+		//currying
+		Function2<Integer, Integer, Integer> sumCurr = (a, b) -> a + b;
+		Function1<Integer, Integer> sumCurr_ = sum.curried().apply(2); 
+
+		assertThat(sumCurr_.apply(4)).isEqualTo(6);
+		
+		Function3<Integer, Integer, Integer, Integer> funct = (a, b, c) -> a + b + c;
+		final Function1<Integer, Function1<Integer, Integer>> addOne = funct.curried().apply(2);
+
+		assertThat(addOne.apply(4).apply(3)).isEqualTo(9); //N.B.: multiple apply calls
+	}
+	
+	@Test public void options() {
+		
+		Optional<String> maybeFoo = Optional.of("foo"); 
+		assertThat(maybeFoo.get()).isEqualTo("foo");
+		Optional<String> maybeFooBar = maybeFoo.map(s -> (String)null)  
+		                                       .map(s -> s.toUpperCase() + "bar");
+		assertThat(maybeFooBar.isPresent()).isFalse();
+		
+		//different handling of nulls in Vavr
+		Option<String> vVrMaybeFoo = Option.of("foo"); 
+		assertThat(vVrMaybeFoo.get()).isEqualTo("foo");
+		try {
+		    vVrMaybeFoo.map(s -> (String)null) 
+		            .map(s -> s.toUpperCase() + "bar"); 
+		    //Assert.fail();
+		} catch (NullPointerException e) {
+			assertThat(e).isInstanceOf(NullPointerException.class);
+		}
+		
+		//preferred way
+		Option<String> vVrMaybeFoo1 = Option.of("foo"); 
+		assertThat(vVrMaybeFoo1.get()).isEqualTo("foo");
+		Option<String> vVrMaybeFooBar = vVrMaybeFoo1.map(s -> (String)null) 
+		                                     .flatMap(s -> Option.of(s) 
+		                                                         .map(t -> t.toUpperCase() + "bar"));
+		assertThat(vVrMaybeFooBar.isEmpty()).isTrue();
+		
+		//alternative way by co-locating flatMap
+		Option<String> maybeFoo_ = Option.of("foo"); 
+		assertThat(maybeFoo_.get()).isEqualTo("foo");
+		Option<String> maybeFooBar_ = maybeFoo_.flatMap(s -> Option.of((String)null)) 
+		                                     .map(s -> s.toUpperCase() + "bar");
+		assertThat(maybeFooBar_.isEmpty()).isTrue();
 	}
 	
 	private int methodAccepting2Params(int a, int b) {

@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
@@ -32,9 +33,9 @@ public class VavrTests {
 
 
 		Throwable thrown = catchThrowable(() -> {
-			assertThat(
+			
 					// Boom!
-					list.add("why not?"));
+					list.add("why not?");
 		});
 		
 		assertThat(thrown).isInstanceOf(UnsupportedOperationException.class).hasNoCause()
@@ -196,11 +197,32 @@ public class VavrTests {
 		
 		Function2<Integer, Integer, Integer> sum1 = Function2.of(this::methodAccepting2Params);
 		assertThat(sum1.apply(2,3)).isEqualTo(5);
+		
+		Function1<Integer, Integer> plusOne = a -> a + 1;
+		Function1<Integer, Integer> multiplyByTwo = a -> a * 2;
+
+		//function composition
+		Function1<Integer, Integer> add1AndMultiplyBy2 = plusOne.andThen(multiplyByTwo);
+
+		assertThat(add1AndMultiplyBy2.apply(2)).isEqualTo(6);
+		
+		//function lifting
+		Function2<Integer, Integer, Integer> divide = (a, b) -> a / b;
+		
+		Throwable thrown = catchThrowable(() -> {
+			divide.apply(4,0);
+					
+		});
+		
+		assertThat(thrown).isInstanceOf(java.lang.ArithmeticException.class).hasMessage("/ by zero");
+		
 	}
 	
 	private int methodAccepting2Params(int a, int b) {
 		return a + b;
 
 	}
+	
+	
 
 }

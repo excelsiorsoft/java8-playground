@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.function.Supplier;
 
@@ -21,12 +22,14 @@ import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Function3;
 import io.vavr.Function5;
+import io.vavr.Lazy;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
 import io.vavr.collection.Stream;
+import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Option.Some;
 import io.vavr.control.Try;
@@ -347,6 +350,33 @@ public class VavrTests {
 		
 	}
 	
+	@Test public void lazy() {
+		Lazy<Double> lazy = Lazy.of(Math::random);
+		lazy.isEvaluated(); 				// = false
+		Double result = lazy.get();         // = 0.123 (random generated)
+		lazy.isEvaluated(); 				// = true
+		Double secondResult = lazy.get();   // = as before (memoized)
+		assertThat(result).isEqualTo(secondResult);
+		
+		CharSequence chars = Lazy.val(() -> "Yay!", CharSequence.class); //N.B.: works ONLY with interfaces, i.e. CharSequence.	
+		assertThat(chars).isEqualTo("Yay!");
+	}
+	
+	@Test public void either() {
+		
+		for(int ji=0; ji<20;ji++) {
+			Either<String,Double> value = compute().right().map(i -> i * 2).toEither();
+			System.out.println("outcome: "+value+"\n");
+		}
+	}
+	
+	private Either<String, Double> compute() {
+		double dice = new Random().nextDouble();
+		System.out.println("dice: "+dice);
+		return (dice > 0.5)? Right(dice):Left("error");
+		
+	}
+
 	private Object somethingWithException(Exception t) {
 		
 		return 1000;

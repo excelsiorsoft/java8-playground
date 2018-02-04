@@ -11,6 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Set;
+
+import java.util.SortedSet;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -38,18 +40,30 @@ public class FlatMapTests {
 	@Test
 	public void splittingFileIntoWords() throws Exception {
 		
-		Function<String, Stream<String>> splitIntoWords = line -> Pattern.compile(" ").splitAsStream(line);
+		Function<String, Stream<String>> splitIntoWords = line -> Pattern.compile("[\" \",.]").splitAsStream(line);
 				
 		try (Stream<String> first = Files.lines(get(getSystemResource("flatMap/text1.txt").toURI()));
 			 Stream<String> second = Files.lines(get(getSystemResource("flatMap/text2.txt").toURI()));
 			 Stream<String> third = Files.lines(get(getSystemResource("flatMap/text3.txt").toURI()));) {
 			 
-			Set<String> words = Stream.of(first, second, third)
+			Stream<String> wordStream = Stream.of(first, second, third)
+			.flatMap(Function.identity())
+			.flatMap(splitIntoWords)
+			.map(String::toLowerCase)
+			.distinct();
+			
+			Set<String> words = wordStream.collect(Collectors.toSet());
+			
+			//System.out.println(words.count());
+			
+			/*Set<String> words = Stream.of(first, second, third)
 				.flatMap(Function.identity())
 				.flatMap(splitIntoWords)
-				.collect(Collectors.toSet());
+				.map(String::toLowerCase)
+				.distinct()
+				.collect(Collectors.toSet());*/
 			
-			System.out.println(words);
+			System.out.println(words.size() + ": "+ words); 
 
 		
 

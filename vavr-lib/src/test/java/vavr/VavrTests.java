@@ -1,21 +1,27 @@
-package streams;
+package vavr;
 
+// $, Case, Match
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Left;
+import static io.vavr.API.Match;
+import static io.vavr.API.Right;
+// instanceOf
+import static io.vavr.Predicates.instanceOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static io.vavr.API.*;        // $, Case, Match
-import static io.vavr.Predicates.*; // instanceOf
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.function.Supplier;
 
 import org.junit.Test;
-import org.junit.Test.None;
 
 import io.vavr.Function0;
 import io.vavr.Function1;
@@ -25,15 +31,16 @@ import io.vavr.Function5;
 import io.vavr.Lazy;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.collection.CharSeq;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Queue;
+import io.vavr.collection.Seq;
 import io.vavr.collection.Stream;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
-import io.vavr.control.Option.Some;
 import io.vavr.control.Try;
-import junit.framework.Assert;
+import io.vavr.control.Validation;
 
 public class VavrTests {
 
@@ -369,6 +376,70 @@ public class VavrTests {
 			Either<String,Double> value = compute().right().map(i -> i * 2).toEither();
 			System.out.println("outcome: "+value+"\n");
 		}
+	}
+	
+	@Test public void validations() {
+		PersonValidator personValidator = new PersonValidator();
+
+		// Valid(Person(John Doe, 30))
+		Validation<Seq<String>, Person> valid = personValidator.validatePerson("John Doe", 30);
+		System.out.println(valid);
+		assertThat(valid).isInstanceOf(Validation.Valid.class);
+		assertThat(valid.get()).isInstanceOf(Person.class);
+
+		// Invalid(List(Name contains invalid characters: '!4?', Age must be greater than 0))
+		Validation<Seq<String>, Person> invalid = personValidator.validatePerson("John? Doe!4", -1);
+		System.out.println(invalid);
+		assertThat(invalid).isInstanceOf(Validation.Invalid.class);
+		
+		Throwable thrown = catchThrowable(() -> {
+			// Boom!
+			invalid.get();
+		});
+
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class).hasMessage("get of 'invalid' Validation");
+
+	}
+	
+	class Person {
+
+	    public final String name;
+	    public final int age;
+
+	    public Person(String name, int age) {
+	        this.name = name;
+	        this.age = age;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "Person(" + name + ", " + age + ")";
+	    }
+
+	}
+	
+	class PersonValidator {
+
+	    private static final String VALID_NAME_CHARS = "[a-zA-Z ]";
+	    private static final int MIN_AGE = 0;
+
+	    public Validation<Seq<String>, Person> validatePerson(String name, int age) {
+	        return Validation.combine(validateName(name), validateAge(age)).ap(Person::new);
+	    }
+
+	    private Validation<String, String> validateName(String name) {
+	        return CharSeq.of(name).replaceAll(VALID_NAME_CHARS, "").transform(seq -> seq.isEmpty()
+	                ? Validation.valid(name)
+	                : Validation.invalid("Name contains invalid characters: '"
+	                + seq.distinct().sorted() + "'"));
+	    }
+
+	    private Validation<String, Integer> validateAge(int age) {
+	        return age < MIN_AGE
+	                ? Validation.invalid("Age must be at least " + MIN_AGE)
+	                : Validation.valid(age);
+	    }
+
 	}
 	
 	private Either<String, Double> compute() {

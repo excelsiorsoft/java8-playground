@@ -432,6 +432,7 @@ public class VavrTests {
 	    	System.out.println("transformation: " +CharSeq.of(name).replaceAll(VALID_NAME_CHARS, "").transform(seq -> seq.isEmpty()));
 	        
 	    	return CharSeq.of(name).replaceAll(VALID_NAME_CHARS, "").transform(seq -> seq.isEmpty()
+
 	                ? Validation.valid(name)
 	                : Validation.invalid("Name contains invalid characters: '"
 	                + seq.distinct().sorted() + "'"));

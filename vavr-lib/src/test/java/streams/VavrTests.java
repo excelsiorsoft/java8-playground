@@ -290,6 +290,7 @@ public class VavrTests {
 		assertThat(addOne.apply(4).apply(3)).isEqualTo(9); //N.B.: multiple apply calls
 	}
 	
+
 	@Test public void options() {
 		
 		Optional<String> maybeFoo = Optional.of("foo"); 
@@ -325,6 +326,7 @@ public class VavrTests {
 		assertThat(maybeFooBar_.isEmpty()).isTrue();
 	}
 	
+
 	private int methodAccepting2Params(int a, int b) {
 		return a + b;
 

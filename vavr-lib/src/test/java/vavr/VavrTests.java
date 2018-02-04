@@ -401,6 +401,17 @@ public class VavrTests {
 
 	}
 	
+	@Test public void collections() {
+		for (double nonRandom : Stream.range(1, 20)) {
+		    System.out.println(nonRandom);
+		}
+		
+		for (double random : Stream.continually(Math::random).take(7)) {
+		    System.out.println(random);
+		}
+	
+	}
+	
 	class Person {
 
 	    public final String name;
@@ -432,6 +443,7 @@ public class VavrTests {
 	    	System.out.println("transformation: " +CharSeq.of(name).replaceAll(VALID_NAME_CHARS, "").transform(seq -> seq.isEmpty()));
 	        
 	    	return CharSeq.of(name).replaceAll(VALID_NAME_CHARS, "").transform(seq -> seq.isEmpty()
+
 	                ? Validation.valid(name)
 	                : Validation.invalid("Name contains invalid characters: '"
 	                + seq.distinct().sorted() + "'"));

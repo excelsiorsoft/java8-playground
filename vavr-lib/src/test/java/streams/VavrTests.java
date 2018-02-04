@@ -2,6 +2,8 @@ package streams;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static io.vavr.API.*;        // $, Case, Match
+import static io.vavr.Predicates.*; // instanceOf
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 
 import org.junit.Test;
 import org.junit.Test.None;
@@ -26,6 +29,7 @@ import io.vavr.collection.Queue;
 import io.vavr.collection.Stream;
 import io.vavr.control.Option;
 import io.vavr.control.Option.Some;
+import io.vavr.control.Try;
 import junit.framework.Assert;
 
 public class VavrTests {
@@ -325,6 +329,30 @@ public class VavrTests {
 		                                     .map(s -> s.toUpperCase() + "bar");
 		assertThat(maybeFooBar_.isEmpty()).isTrue();
 	}
+	
+	@Test public void trials() {
+		Supplier<Integer> other = () -> 10;
+		Object result = Try.of(() -> bunchOfWork()).getOrElse(other);
+		assertThat(result).isEqualTo(other.get());
+		
+		
+		Object outcome = Try.of(this::bunchOfWork)
+			    .recover(x -> Match(x).of(
+			        Case($(instanceOf(IllegalStateException.class)), t -> somethingWithException(t)),
+			        Case($(instanceOf(IllegalArgumentException.class)), t -> somethingWithException(t)),
+			        Case($(instanceOf(UnsupportedOperationException.class)), t -> somethingWithException(t))
+			    ))
+			    .getOrElse(other);
+		assertThat(outcome).isEqualTo(1000);
+		
+	}
+	
+	private Object somethingWithException(Exception t) {
+		
+		return 1000;
+	}
+
+	private Object bunchOfWork() {throw new IllegalStateException();}
 	
 
 	private int methodAccepting2Params(int a, int b) {

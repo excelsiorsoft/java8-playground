@@ -364,6 +364,7 @@ public class VavrTests {
 	
 	@Test public void either() {
 		
+
 		for(int j=0; j<20;j++) {
 			Either<String,Double> value = compute().right().map(i -> i * 2).toEither();
 			System.out.println("outcome: "+value+"\n");

@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 
@@ -409,6 +410,18 @@ public class VavrTests {
 		for (double random : Stream.continually(Math::random).take(7)) {
 		    System.out.println(random);
 		}
+		
+		//Java ways
+		int sum = Arrays.asList(1, 2, 3).stream().reduce((i, j) -> i + j).get();
+		assertThat(sum).isEqualTo(6);
+		
+		sum = IntStream.of(1, 2, 3).sum();
+		
+		//Vavr way
+		Number nsum = List.of(1, 2, 3).sum();
+		assertThat(nsum.doubleValue()).isEqualTo(6d);
+		assertThat(nsum.intValue()).isEqualTo(6);
+		assertThat(nsum.floatValue()).isEqualTo(6f);
 	
 	}
 	

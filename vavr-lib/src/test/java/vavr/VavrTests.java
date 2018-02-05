@@ -42,6 +42,8 @@ import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
+import io.vavr.test.Arbitrary;
+import io.vavr.test.Property;
 
 public class VavrTests {
 
@@ -437,6 +439,16 @@ public class VavrTests {
 
 		
 	
+	}
+	
+	@Test public void propertyChecking() {
+		
+		Arbitrary<Integer> ints = Arbitrary.integer();
+		Property.def("square(int) >= 0")
+        .forAll(ints)
+        .suchThat(i -> i * i >= 0)
+        .check()
+        .assertIsSatisfied();
 	}
 	
 	class Person {

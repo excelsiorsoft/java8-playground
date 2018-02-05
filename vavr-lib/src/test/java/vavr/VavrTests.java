@@ -422,6 +422,20 @@ public class VavrTests {
 		assertThat(nsum.doubleValue()).isEqualTo(6d);
 		assertThat(nsum.intValue()).isEqualTo(6);
 		assertThat(nsum.floatValue()).isEqualTo(6f);
+
+		//Stream in Vavr
+		Stream<Integer> str = Stream.from(1).filter(i -> i % 2 == 0).take(3);
+		assertThat(str.size()==3);
+		assertThat(str.get(1)==4);
+		
+		Throwable thrown = catchThrowable(() -> {
+			// Boom!
+			str.get(3);
+		});
+
+		assertThat(thrown).isInstanceOf(IndexOutOfBoundsException.class).hasMessage("get(3) on Stream of size 3");
+
+		
 	
 	}
 	

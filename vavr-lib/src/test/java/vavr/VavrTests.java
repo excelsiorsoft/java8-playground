@@ -439,6 +439,7 @@ public class VavrTests {
 	
 	}
 	
+
 	@Test public void match() {
 		
 		int i = 2;
@@ -454,6 +455,7 @@ public class VavrTests {
 	}
 	
 	@Test public void propertyChecking() {
+
 		
 		Arbitrary<Integer> ints = Arbitrary.integer();
 		Property.def("square(int) >= 0")

@@ -359,7 +359,7 @@ public class VavrTests {
 			        Case($(instanceOf(UnsupportedOperationException.class)), t -> somethingWithException(t))
 			    ))
 			    .getOrElse(other);
-		assertThat(outcome).isEqualTo(1000);
+		assertThat(outcome).isEqualTo("IllegalStateException");
 		
 	}
 	
@@ -478,6 +478,20 @@ public class VavrTests {
 		System.out.println("match: " +r);
 	}
 	
+	@Test public void match2() {
+		
+		Number obj = 1d;
+		
+		Number plusOne = Match(obj).of(
+			    Case($(instanceOf(Integer.class)), i -> i + 1),
+			    Case($(instanceOf(Double.class)), d -> d + 1),
+			    Case($(), o -> { throw new NumberFormatException(); })
+			);
+		
+		System.out.println("match: " + plusOne);
+	}
+	
+	
 	private void displayHelp() {System.out.println("This is a help message.");}
 	private void displayVersion() {System.out.println("This is a version message.");}
 	
@@ -547,8 +561,8 @@ public class VavrTests {
 	}
 
 	private Object somethingWithException(Exception t) {
-		
-		return 1000;
+		return t.getClass().getSimpleName();
+		//return 1000;
 	}
 
 	private Object bunchOfWork() {throw new IllegalStateException();}

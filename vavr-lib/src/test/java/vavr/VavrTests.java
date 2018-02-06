@@ -40,6 +40,7 @@ import io.vavr.collection.Seq;
 import io.vavr.collection.Stream;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
+import io.vavr.control.Option.None;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
 import io.vavr.test.Arbitrary;
@@ -452,6 +453,13 @@ public class VavrTests {
 		
 		assertThat(s).isEqualTo("two");
 		assertThat(s).isNotEqualTo("one");
+		
+		Option<String> sopt = Match(i).option(
+			    Case($(0), "zero")
+			);
+		
+		assertThat(sopt).isInstanceOf(None.class);
+		
 	}
 	
 	@Test public void propertyChecking() {

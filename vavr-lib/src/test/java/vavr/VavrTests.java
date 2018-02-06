@@ -478,14 +478,8 @@ public class VavrTests {
 		System.out.println("match: " +r);
 	}
 	
-	/*private Void run(Supplier<String> supp) {
-		System.out.println(supp.get());
-		return null;}*/
-	
-	//private Void run(Supplier<Void> supp) {supp.get();}
-	
-	private /*String*/ void displayHelp() {/*return */System.out.println("This is a help message.");/*return null;*/}
-	private /*String*/ void displayVersion() {/*return */System.out.println("This is a version message.");}
+	private void displayHelp() {System.out.println("This is a help message.");}
+	private void displayVersion() {System.out.println("This is a version message.");}
 	
 	
 	

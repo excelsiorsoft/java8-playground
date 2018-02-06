@@ -6,6 +6,8 @@ import static io.vavr.API.Case;
 import static io.vavr.API.Left;
 import static io.vavr.API.Match;
 import static io.vavr.API.Right;
+import static io.vavr.API.run;
+import static io.vavr.Predicates.isIn;
 // instanceOf
 import static io.vavr.Predicates.instanceOf;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -459,8 +461,33 @@ public class VavrTests {
 			);
 		
 		assertThat(sopt).isInstanceOf(None.class);
-		
 	}
+	
+	@Test public void match1() {
+		
+		String arg = "--version";
+		
+		Object r = Match(arg).of(
+			    Case($(isIn("-h", "--help")), o -> run(this::displayHelp)),
+			    Case($(isIn("-v", "--version")), o -> run(this::displayVersion)),
+			    Case($(), o -> run(() -> {
+			        throw new IllegalArgumentException(arg);
+			    }))
+			);
+		
+		System.out.println("match: " +r);
+	}
+	
+	/*private Void run(Supplier<String> supp) {
+		System.out.println(supp.get());
+		return null;}*/
+	
+	//private Void run(Supplier<Void> supp) {supp.get();}
+	
+	private /*String*/ void displayHelp() {/*return */System.out.println("This is a help message.");/*return null;*/}
+	private /*String*/ void displayVersion() {/*return */System.out.println("This is a version message.");}
+	
+	
 	
 	@Test public void propertyChecking() {
 

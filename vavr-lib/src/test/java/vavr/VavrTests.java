@@ -436,9 +436,21 @@ public class VavrTests {
 		});
 
 		assertThat(thrown).isInstanceOf(IndexOutOfBoundsException.class).hasMessage("get(3) on Stream of size 3");
-
-		
 	
+	}
+	
+	@Test public void match() {
+		
+		int i = 2;
+		
+		String s = Match(i).of(
+			    Case($(1), "one"),
+			    Case($(2), "two"),
+			    Case($(), "?")
+			);
+		
+		assertThat(s).isEqualTo("two");
+		assertThat(s).isNotEqualTo("one");
 	}
 	
 	@Test public void propertyChecking() {

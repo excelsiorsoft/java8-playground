@@ -17,7 +17,9 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -720,7 +722,17 @@ public class VavrTests {
 		
 	}
 	
-
+	Try<URL> getSingleSearchResults(String searchString){
+		return Try.of(()->new URL("http://www.google.com"));
+	}
+	
+	@Test public void testMultilevelTry() {
+		Try<Try<InputStream>> multilevelTry = getSingleSearchResults("javaday").map(url -> Try.of(url::openStream));
+		System.out.println(multilevelTry);
+		Try<InputStream> singlelevelTry = getSingleSearchResults("javaday").flatMap(url -> Try.of(url::openStream));
+		System.out.println(singlelevelTry);
+		
+	}
 	
 
 

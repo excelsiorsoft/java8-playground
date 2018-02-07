@@ -7,15 +7,16 @@ import static io.vavr.API.Left;
 import static io.vavr.API.Match;
 import static io.vavr.API.Right;
 import static io.vavr.API.run;
-import static io.vavr.Predicates.isIn;
-import static io.vavr.Patterns.$Success;
 import static io.vavr.Patterns.$Failure;
-
+import static io.vavr.Patterns.$Success;
 // instanceOf
 import static io.vavr.Predicates.instanceOf;
+import static io.vavr.Predicates.isIn;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,8 +28,10 @@ import java.util.TreeMap;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import org.apache.log4j.BasicConfigurator;
 import org.junit.Test;
-import org.junit.runner.notification.Failure;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.vavr.Function0;
 import io.vavr.Function1;
@@ -47,6 +50,7 @@ import io.vavr.collection.Stream;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Option.None;
+import io.vavr.control.Try.Success;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
 import io.vavr.test.Arbitrary;
@@ -54,7 +58,8 @@ import io.vavr.test.Property;
 
 public class VavrTests {
 
-	
+	final Logger logger = LoggerFactory.getLogger(VavrTests.class);
+	{BasicConfigurator.configure();} //https://stackoverflow.com/questions/12532339/no-appenders-could-be-found-for-loggerlog4j
 
 	@Test
 	public void unmod() {
@@ -662,6 +667,61 @@ public class VavrTests {
 	}
 	
 
+	Try<java.util.List<String>> getSearchResults(String searchString){
+		Try<java.util.List<String>>  t = null;
+		try {
+			throw new MalformedURLException("no urls");
+		} catch (MalformedURLException e) {
+			t = Try.failure(e);
+		}
+		return t;
+		}
+	
+	
+	@Test public void getSearchResultsTest() {
+		String defaultResult = "http://www.google.com";
+		java.util.List<String> urls = getSearchResults("javaday")
+		.onFailure(ex -> logger.error("Houston, we have a problem: "+ex.getMessage()))
+		.getOrElse((java.util.List<String>) Collections.singletonList(defaultResult)); //since something went wrong, we return default value
+		assertThat(urls.size()==1);
+		assertThat(urls.get(0)).isEqualTo(defaultResult);
+	}
+	
+	java.util.List<String> getFromGoogle(String search) throws NoSuchElementException, IOException{
+		throw new NoSuchElementException("the url doesn't exist");
+	}
+	
+	java.util.List<String> getFromDuckDuckGo(String search) throws  IOException{
+		throw new IOException("the url doesn't exist");
+	}
+	
+	public static final class ForbiddenException extends RuntimeException {
+		public ForbiddenException() {
+			super("This site is forbidden");
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked"})
+	Try<java.util.List<String>> getSearchResults2Apis(String searchString){
+		java.util.List<String> emptyList = Collections.EMPTY_LIST;
+		return Try.of(()->getFromGoogle(searchString))
+				.recover(NoSuchElementException.class, emptyList)
+				.recover(ForbiddenException.class, emptyList)
+				.orElse(Try.of(()->(getFromDuckDuckGo(searchString)))); //falback to duckDuckGo
+		
+	}
+	
+	@Test public void testGetSearchResultsWith2Apis() {
+		Try<java.util.List<String>> result = getSearchResults2Apis("javaday");
+				assertThat(result).isInstanceOf(Success.class);
+				assertThat(result.get()).isEmpty();
+		
+	}
+	
+	
+	
+	
+	
 	
 
 }

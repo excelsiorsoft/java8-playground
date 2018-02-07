@@ -726,6 +726,7 @@ public class VavrTests {
 		return Try.of(()->new URL("http://www.google.com"));
 	}
 	
+
 	@Test
 	public void testMultilevelTry() {
 		Try<Try<InputStream>> multilevelTry = getSingleSearchResults("javaday").map(url -> Try.of(url::openStream));
@@ -741,6 +742,7 @@ public class VavrTests {
 		
 		System.out.println(result);
 		assertThat(result).isEqualTo(expectedOutcome);
+
 
 	}
 	

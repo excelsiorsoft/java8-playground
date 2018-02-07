@@ -15,6 +15,7 @@ import static io.vavr.Predicates.isIn;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -676,6 +677,7 @@ public class VavrTests {
 		}
 		return t;
 		}
+
 	
 	
 	@Test public void getSearchResultsTest() {
@@ -718,10 +720,8 @@ public class VavrTests {
 		
 	}
 	
+
 	
-	
-	
-	
-	
+
 
 }

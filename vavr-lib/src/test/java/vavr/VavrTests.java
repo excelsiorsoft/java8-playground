@@ -472,6 +472,13 @@ public class VavrTests {
 		}
 	}
 	
+	private Either<String, Double> compute() {
+		double dice = new Random().nextDouble();
+		System.out.println("dice: "+dice);
+		return (dice > 0.5)? Right(dice):Left("error");
+		
+	}
+	
 	@Test public void validations() {
 		PersonValidator personValidator = new PersonValidator();
 
@@ -641,12 +648,7 @@ public class VavrTests {
 
 	}
 	
-	private Either<String, Double> compute() {
-		double dice = new Random().nextDouble();
-		System.out.println("dice: "+dice);
-		return (dice > 0.5)? Right(dice):Left("error");
-		
-	}
+
 
 	private Object somethingWithException(Exception t) {
 		return t.getClass().getSimpleName();
@@ -746,6 +748,42 @@ public class VavrTests {
 
 	}
 	
+	public static final class FetchError extends RuntimeException {
+		private static final long serialVersionUID = 1L;
 
+		public FetchError(String weight) {
+			super(weight);
+		}
+		
+	}
+	
+	public Either<FetchError, java.util.List<URL>> getSearchResults(Random random){
+		Either<FetchError, java.util.List<URL>> result = null;
+
+		java.util.List<URL> urls = new ArrayList<>();
+
+			int dice = random.nextInt(10);
+			if (dice<5) {//exception thrown
+				result = Left(new FetchError(Integer.toString(dice)));
+			} else {	//successful run
+				try {
+					urls.add(new URL("http://www."+dice+".com"));
+					result = Right(urls);
+				} catch (MalformedURLException e) {
+					result = Left(new FetchError(Integer.toString(dice)));
+				}
+			}
+
+			return result;
+		}
+
+	
+	@Test public void testEitherInErrorHandling() {
+		Random random = new Random();
+		for(int i=0;i<20;i++) {
+			Either<FetchError, java.util.List<URL>> either = getSearchResults(random);
+			System.out.println(either);
+		}
+	}
 
 }

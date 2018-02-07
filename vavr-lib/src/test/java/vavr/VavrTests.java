@@ -8,6 +8,9 @@ import static io.vavr.API.Match;
 import static io.vavr.API.Right;
 import static io.vavr.API.run;
 import static io.vavr.Predicates.isIn;
+import static io.vavr.Patterns.$Success;
+import static io.vavr.Patterns.$Failure;
+
 // instanceOf
 import static io.vavr.Predicates.instanceOf;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -365,11 +368,40 @@ public class VavrTests {
 	}
 	
 	@Test public void trialWithPatternMatching() {
+		
+		
 		Try<Beverage> vodkaToUnderaged = Try.of(() -> new Transaction().buyBeverage(new Customer(16)));
 		assertThat(vodkaToUnderaged).isInstanceOf(Try.Failure.class);
 		Try<Beverage> wineToAdult = Try.of(() -> new Transaction().buyBeverage(new Customer(30)));
 		assertThat(wineToAdult).isInstanceOf(Try.Success.class);
 		System.out.println("alcohol content: "+(wineToAdult.isSuccess()?wineToAdult.get().getAlcoholConcentration():0));
+		
+		String result = Match(vodkaToUnderaged).of(
+		        Case($Success($()), c -> "drinked " + c),
+		        Case($Failure($()), t -> "troubles"));
+		
+		System.out.println(result);
+		
+		
+		Try<Integer> concentration = wineToAdult.map(Beverage::getAlcoholConcentration);
+		System.out.println("alcohol content: "+concentration);
+		
+		result = Match(concentration).of(
+		        Case($Success($()), c -> "drinked " + c),
+		        Case($Failure($()), t -> "troubles"));
+		
+		System.out.println(result);
+		
+		List<Customer> customers = List.of(new Customer(12),new Customer(16), new Customer(30), new Customer(52));
+		customers.forEach(
+				c -> {
+						Try.of(() -> new Transaction().buyBeverage(c))
+							.map(Beverage::getAlcoholConcentration)
+							.map(Integer::new)
+							.forEach(System.out::print);;
+	
+					});
+	
 	}
 	
 	public final static class Customer {

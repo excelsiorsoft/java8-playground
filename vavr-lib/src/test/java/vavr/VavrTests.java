@@ -365,9 +365,10 @@ public class VavrTests {
 	}
 	
 	@Test public void trialWithPatternMatching() {
-
-		Try<Beverage> vodka = Try.of(() -> new Transaction().buyBeverage(new Customer(16)));
-		assertThat(vodka).isInstanceOf(Try.Failure.class);
+		Try<Beverage> vodkaToUnderaged = Try.of(() -> new Transaction().buyBeverage(new Customer(16)));
+		assertThat(vodkaToUnderaged).isInstanceOf(Try.Failure.class);
+		Try<Beverage> wineToAdult = Try.of(() -> new Transaction().buyBeverage(new Customer(30)));
+		assertThat(wineToAdult).isInstanceOf(Try.Success.class);
 	}
 	
 	public final static class Customer {

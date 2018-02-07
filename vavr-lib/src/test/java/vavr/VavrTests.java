@@ -767,6 +767,7 @@ public class VavrTests {
 				result = Left(new FetchError(Integer.toString(dice)));
 			} else {	//successful run
 				try {
+
 					for(int i=0; i<50;i=i+10) {
 					urls.add(new URL("http://www."+(dice+i)+".com"));
 					result = Right(urls);
@@ -787,6 +788,7 @@ public class VavrTests {
 			System.out.println(either);
 			either.left().map(error -> "received error with message" + error.getMessage()).forEach(System.out::println);
 			either .right().map(list -> "received list of URLs: " + list.toString()).forEach(System.out::println);
+
 		}
 	}
 

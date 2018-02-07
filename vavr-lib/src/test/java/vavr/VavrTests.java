@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import org.junit.Test;
+import org.junit.runner.notification.Failure;
 
 import io.vavr.Function0;
 import io.vavr.Function1;
@@ -361,6 +362,51 @@ public class VavrTests {
 			    .getOrElse(other);
 		assertThat(outcome).isEqualTo("IllegalStateException");
 		
+	}
+	
+	@Test public void trialWithPatternMatching() {
+
+		Try<Beverage> vodka = Try.of(() -> new Transaction().buyBeverage(new Customer(16)));
+		assertThat(vodka).isInstanceOf(Try.Failure.class);
+	}
+	
+	public final static class Customer {
+	    private final int age;
+	    public Customer(int age) {
+			this.age = age;
+		}
+		public int getAge() {
+	        return age;
+	    }
+	}
+	
+	public final static class Beverage {
+	    private final  int alcoholConcentration;
+	    public int getAlcoholConcentration() {
+	        return alcoholConcentration;
+	    }
+	    
+	    public Beverage(int alcohol) {
+	    	this.alcoholConcentration = alcohol;
+	    }
+	}
+	
+	public final static class UnderageException extends Exception {
+
+		private static final long serialVersionUID = 1L;
+
+		public UnderageException(String message) {
+	        super(message);
+	    }
+	}
+	
+	public final static class Transaction {
+		public Beverage buyBeverage(Customer customer) throws UnderageException {
+		    if (customer.getAge() < 18) {
+		        throw new UnderageException("Age: " + customer.getAge());
+		    }
+		    return new Beverage(5);
+		}
 	}
 	
 	@Test public void lazy() {

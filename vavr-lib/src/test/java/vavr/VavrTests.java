@@ -370,6 +370,7 @@ public class VavrTests {
 		Try<Beverage> wineToAdult = Try.of(() -> new Transaction().buyBeverage(new Customer(30)));
 		assertThat(wineToAdult).isInstanceOf(Try.Success.class);
 		System.out.println("alcohol content: "+(wineToAdult.isSuccess()?wineToAdult.get().getAlcoholConcentration():0));
+
 	}
 	
 	public final static class Customer {

@@ -401,7 +401,7 @@ public class VavrTests {
 							.forEach(System.out::print);;
 	
 					});
-	
+
 	}
 	
 	public final static class Customer {

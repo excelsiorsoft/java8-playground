@@ -356,6 +356,14 @@ public class VavrTests {
 		Option<String> maybeFooBar_ = maybeFoo_.flatMap(s -> Option.of((String)null)) 
 		                                     .map(s -> s.toUpperCase() + "bar");
 		assertThat(maybeFooBar_.isEmpty()).isTrue();
+		
+		//
+		Option<Object> noneOption = Option.of(null);
+	    Option<Object> someOption = Option.of("val");
+	 
+	    assertThat(noneOption.toString()).isEqualTo("None");
+	    assertThat(someOption.toString()).isEqualTo("Some(val)");
+
 	}
 	
 	@Test public void trials() {
@@ -786,7 +794,9 @@ public class VavrTests {
 		for(int i=0;i<20;i++) {
 			Either<FetchError, java.util.List<URL>> either = getSearchResults(random);
 			System.out.println(either);
+			//left projection handles errors
 			either.left().map(error -> "received error with message" + error.getMessage()).forEach(System.out::println);
+			//right projection handles values
 			either .right().map(list -> "received list of URLs: " + list.toString()).forEach(System.out::println);
 
 		}

@@ -405,6 +405,10 @@ public class VavrTests {
 			    .getOrElse(other);
 		assertThat(outcome).isEqualTo("IllegalStateException");
 		
+		//
+		Try<Integer> divByZero = Try.of(() -> 1 / 0);
+	    assertThat(divByZero.isFailure()).isTrue();
+		
 	}
 	
 	@Test public void trialWithPatternMatching() {

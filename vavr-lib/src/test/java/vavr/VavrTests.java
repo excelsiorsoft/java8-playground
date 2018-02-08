@@ -412,7 +412,15 @@ public class VavrTests {
 	    int ifError = -1;
 		int _outcome = divByZero.getOrElse(ifError);
 	    assertThat(_outcome).isEqualTo(ifError);
-
+	    
+	    
+	    Throwable thrown = catchThrowable(() -> {
+	    	divByZero.getOrElseThrow(e->new RuntimeException(e));//re-throw different ex type
+					
+		});
+		
+		assertThat(thrown).isInstanceOf(java.lang.RuntimeException.class).hasMessageContaining("/ by zero");
+		
 		
 	}
 	

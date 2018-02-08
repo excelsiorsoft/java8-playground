@@ -242,6 +242,15 @@ public class VavrTests {
 	
 	@Test public void functions() {
 		
+		//Function0 is equivalent to Java 8's Consumer
+		Function0<String> getClazzName = () -> this.getClass().getSimpleName();
+	    String clazzName = getClazzName.apply();
+	    assertThat(clazzName).isEqualTo("VavrTests");
+	    
+	    //Creating functions
+	    Function0.of(getClazzName);
+	    Function2.of(this::partialSum);
+		
 		Function2<Integer, Integer, Integer> sum = (a, b) -> a + b;
 		assertThat(sum.apply(2,3)).isEqualTo(5);
 		

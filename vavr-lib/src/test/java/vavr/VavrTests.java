@@ -363,6 +363,13 @@ public class VavrTests {
 	 
 	    assertThat(noneOption.toString()).isEqualTo("None");
 	    assertThat(someOption.toString()).isEqualTo("Some(val)");
+	    
+	    //
+	    String name = null;
+	    Option<String> nameOption = Option.of(name);
+	    
+	    assertThat(nameOption.getOrElse("default")).isEqualTo("default");
+	    
 
 	}
 	

@@ -363,6 +363,17 @@ public class VavrTests {
 	 
 	    assertThat(noneOption.toString()).isEqualTo("None");
 	    assertThat(someOption.toString()).isEqualTo("Some(val)");
+	    
+	    //
+	    String name = null;
+	    Option<String> nameOption = Option.of(name);
+	    
+	    assertThat(nameOption.getOrElse("default")).isEqualTo("default");
+	    
+	    name = "valueObtained";
+	    nameOption = Option.of(name); //has to re-assign, Options are immutable so the previous assignment won't work.
+	 
+	    assertThat(nameOption.getOrElse("defaultValue")).isEqualTo("valueObtained");
 
 	}
 	

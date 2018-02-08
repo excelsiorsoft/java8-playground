@@ -44,6 +44,7 @@ import io.vavr.Function5;
 import io.vavr.Lazy;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.Tuple3;
 import io.vavr.collection.CharSeq;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
@@ -226,6 +227,16 @@ public class VavrTests {
 		
 		String r = java8.apply((s, i) -> s.substring(2) + "vr"+ i*3);
 		assertThat(r).hasToString("vavr24");
+
+		//
+		Tuple3<String, Integer, Double> _java8 = Tuple.of("Java", 8, 1.8);
+	    String element1 = _java8._1;
+	    int element2 = _java8._2();
+	    double element3 = _java8._3();
+	         
+	    assertThat(element1).isEqualTo("Java");
+	    assertThat(element2).isEqualTo(8);
+	    assertThat(element3).isEqualTo(1.8);
 
 	}
 	

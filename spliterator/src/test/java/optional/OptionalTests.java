@@ -85,14 +85,28 @@ public class OptionalTests {
 			
 		
 		invSqrtDoubles.forEach(System.out::println);
+		System.out.println("invSqrtDoubles #: "+invSqrtDoubles.size());
 		System.out.println("\n\n");
 		
-		Stream<Double> streamOfDoubles = ThreadLocalRandom.current().doubles(10).boxed();
+		Stream<Double> streamOfDoubles = ThreadLocalRandom.current().doubles(10).boxed(); //no negative #'s 
 		
 		List<Double> invSqrtDoublesOfRandomDoubles = 
 		streamOfDoubles.parallel().flatMap(invSqrt).collect(Collectors.toList());
 
 		invSqrtDoublesOfRandomDoubles.forEach(System.out::println);;
+		System.out.println("invSqrtDoublesOfRandomDoubles #: "+invSqrtDoublesOfRandomDoubles.size());
+		System.out.println("\n\n");
+		
+		streamOfDoubles = ThreadLocalRandom.current()
+				.doubles(10)
+				.map(d-> d*20-10) //introducing some negative #'s to be filtered out
+				.boxed();
+		
+		invSqrtDoublesOfRandomDoubles = 
+		streamOfDoubles.parallel().flatMap(invSqrt).collect(Collectors.toList());
+
+		invSqrtDoublesOfRandomDoubles.forEach(System.out::println);;
+		System.out.println("invSqrtDoublesOfRandomDoubles #: "+invSqrtDoublesOfRandomDoubles.size());
 	}
 
 }

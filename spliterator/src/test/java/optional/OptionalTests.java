@@ -22,6 +22,9 @@ public void optionals() {
 	
 	double avgAge = average.orElse(42);
 	assertThat(avgAge).isEqualTo(42);
+	
+	avgAge = average.orElseGet(() -> 42); //supplier will only build when necessary
+	assertThat(avgAge).isEqualTo(42);
 }
 
 }

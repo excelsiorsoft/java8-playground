@@ -19,6 +19,9 @@ public void optionals() {
 	
 	OptionalDouble average = people.stream().mapToInt(p -> p.getAge()).average();
 	assertThat(average).isInstanceOf(OptionalDouble.class);
+	
+	double avgAge = average.orElse(42);
+	assertThat(avgAge).isEqualTo(42);
 }
 
 }

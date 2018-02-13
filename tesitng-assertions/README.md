@@ -5,3 +5,7 @@ https://stackoverflow.com/questions/48774147/assertions-for-non-deterministic-be
 
 https://github.com/fiery-phoenix/assertj-core/blob/dfa55cc30bbd6ab55fc2bbeea2c24d87949155d2/src/test/java/org/assertj/core/temp/ChainedSoftAssertionTest.java
 
+[http://beust.com/weblog/2012/07/29/reinventing-assertions/](http://beust.com/weblog/2012/07/29/reinventing-assertions/)
+
+[http://beust.com/weblog/2012/07/29/reinventing-assertions/](http://beust.com/weblog/2012/07/29/reinventing-assertions/)
+

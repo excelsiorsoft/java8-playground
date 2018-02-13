@@ -34,7 +34,7 @@ public class ChainedSoftAssertionTest {
     }
   }
 
-  private static class EmailSoftAssertions extends SoftAssertions {
+  private final static class EmailSoftAssertions extends SoftAssertions {
 
     public EmailAssert assertThat(Email actual) {
       return proxy(EmailAssert.class, Email.class, actual);

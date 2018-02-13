@@ -44,6 +44,7 @@ public class ParallelStreamTests {
 	@Test
 	public void raceConditions() throws Exception {
 		
+
 		List<String> strings = new ArrayList<>(); //not thread-safe
 		
 		Stream.iterate("+", s -> s+"+")
@@ -59,7 +60,7 @@ public class ParallelStreamTests {
 	public void threadSafe() throws Exception {
 		
 		List<String> strings = new CopyOnWriteArrayList<>(); //concurrent-aware
-		
+
 		Stream.iterate("+", s -> s+"+")
 		.parallel()
 		.limit(10000)

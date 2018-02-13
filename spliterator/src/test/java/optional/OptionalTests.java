@@ -4,10 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -61,6 +66,33 @@ public class OptionalTests {
 			return d != 0d ? Optional.of(1 / d) : Optional.empty();
 		}
 
+	}
+	
+	@Test public void computeInverseSqrt() {
+		
+		Function<Double, Stream<Double>> invSqrt = 
+				d -> NewMath.inv(d)
+				.flatMap(NewMath::sqrt)
+				.map(Stream::of)
+				.orElseGet(Stream::empty);
+				
+		List<Double> doubles = Arrays.asList(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 9d, 10d);
+		
+		
+		
+		List<Double> invSqrtDoubles = 
+				doubles.stream().parallel().flatMap(invSqrt).collect(Collectors.toList());
+			
+		
+		invSqrtDoubles.forEach(System.out::println);
+		System.out.println("\n\n");
+		
+		Stream<Double> streamOfDoubles = ThreadLocalRandom.current().doubles(10).boxed();
+		
+		List<Double> invSqrtDoublesOfRandomDoubles = 
+		streamOfDoubles.parallel().flatMap(invSqrt).collect(Collectors.toList());
+
+		invSqrtDoublesOfRandomDoubles.forEach(System.out::println);;
 	}
 
 }

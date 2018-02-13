@@ -1,4 +1,4 @@
-package streams;
+package parallel_streams;
 
 import static java.lang.ClassLoader.getSystemResource;
 

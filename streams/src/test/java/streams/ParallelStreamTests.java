@@ -41,8 +41,8 @@ public class ParallelStreamTests {
 	}
 	
 	
-	
-	@Test
+	//TODO: how to assert 2 erroneous condtions one of which is an exception
+	@Test/*(expected=ArrayIndexOutOfBoundsException.class)*/
 	public void raceConditions() throws Exception {
 		
 

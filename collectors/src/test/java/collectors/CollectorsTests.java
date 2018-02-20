@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -36,19 +38,10 @@ public class CollectorsTests {
 
 		Function<String, Integer> score = word -> word.chars().map(letter -> scrabbleENScore[letter - 'a']).sum();
 
-		/*ToIntFunction<String> intScore = word -> word.chars().map(letter -> scrabbleENScore[letter - 'a']).sum();
-
-		System.out.println("Score of hello: " + intScore.applyAsInt("hello"));
-
-		String bestWord = shakespeareWords.stream().filter(word -> scrabbleWords.contains(word))
-				.max(Comparator.comparing(score)).get();
-
-		System.out.println("Best word: " + bestWord);
-
-		IntSummaryStatistics summaryStatistics = shakespeareWords.stream().parallel().filter(scrabbleWords::contains)
-				.mapToInt(intScore).summaryStatistics();
-
-		System.out.println("Stats: " + summaryStatistics);*/
+		Map<Integer, List<String>> histogramWordsByScore =
+				shakespeareWords.stream().collect(Collectors.groupingBy(score));
+		
+		System.out.println("# of buckets in histogramWordsByScore=" + histogramWordsByScore.size());
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 import org.junit.Assert;
@@ -87,8 +88,11 @@ public class Chapter2Tests {
 		
 	}
 	
-	//accepts and returns the same type
+	//Operator accepts and returns the same type
 	UnaryOperator<String> upperCase = str -> str.toUpperCase();
 	BinaryOperator<String> concat = (left, right) -> left + right;
+	
+	//Predicate
+	Predicate<String> notNullOrEmpty = s -> s != null && s.length() > 0;
 
 }

@@ -3,8 +3,10 @@ package com.excelsiorsoft.java_closures_lambda_book;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,6 +83,12 @@ public class Chapter2Tests {
 		Assert.assertEquals("HELLO", transform("Hello", (String str) -> str.toUpperCase()));
 		Assert.assertEquals("HELLO", transform("Hello", (CharSequence str) -> ((String)str).toUpperCase()));
 		//System.out.println(transform("Hello", (String str) -> str.toUpperCase()));
+		
+		
 	}
+	
+	//accepts and returns the same type
+	UnaryOperator<String> upperCase = str -> str.toUpperCase();
+	BinaryOperator<String> concat = (left, right) -> left + right;
 
 }

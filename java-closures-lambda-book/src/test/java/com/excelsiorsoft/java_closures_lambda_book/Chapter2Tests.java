@@ -55,5 +55,16 @@ public class Chapter2Tests {
 		BiFunction<String, String, String> concat = (a,b) -> a + b;
 		greetFolks(whom -> concat.apply("Hello, ", whom));
 	}
+	
+	
+	public <T,U,V> Function<U,V> applyPartial(BiFunction<T,U,V> bif, T firstArgument){
+		return u -> bif.apply(firstArgument, u);
+	}
+	
+	@Test
+	public void explicitParticalFunction() {
+		BiFunction<String, String, String> concat = (a,b) -> a + b;
+		greetFolks(applyPartial(concat, "Hello, "));
+	}
 
 }

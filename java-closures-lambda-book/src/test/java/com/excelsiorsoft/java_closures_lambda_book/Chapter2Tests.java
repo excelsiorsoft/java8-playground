@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -65,6 +66,21 @@ public class Chapter2Tests {
 	public void explicitParticalFunction() {
 		BiFunction<String, String, String> concat = (a,b) -> a + b;
 		greetFolks(applyPartial(concat, "Hello, "));
+	}
+	
+	public String transform(String str, Function<String, String> transformer) {
+		return transformer.apply(str);
+	}
+	
+	public CharSequence transform(CharSequence str, Function<CharSequence, CharSequence> transformer) {
+		return transformer.apply(str);
+	}
+	
+	@Test
+	public void lambdasWithExplicitTyping() {
+		Assert.assertEquals("HELLO", transform("Hello", (String str) -> str.toUpperCase()));
+		Assert.assertEquals("HELLO", transform("Hello", (CharSequence str) -> ((String)str).toUpperCase()));
+		//System.out.println(transform("Hello", (String str) -> str.toUpperCase()));
 	}
 
 }

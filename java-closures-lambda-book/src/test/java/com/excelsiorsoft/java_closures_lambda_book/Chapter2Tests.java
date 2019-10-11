@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -94,5 +95,8 @@ public class Chapter2Tests {
 	
 	//Predicate
 	Predicate<String> notNullOrEmpty = s -> s != null && s.length() > 0;
+	
+	//Functions with primitives
+	IntFunction<String> intToString  = i -> Integer.toString(i);
 
 }

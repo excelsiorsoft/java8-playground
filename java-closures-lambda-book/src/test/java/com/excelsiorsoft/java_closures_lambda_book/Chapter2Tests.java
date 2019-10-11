@@ -11,13 +11,13 @@ import org.junit.Test;
 
 public class Chapter2Tests {
 
-	public static void greetFolks(Function<String, String> greeter) {
+	public /*static*/ void greetFolks(Function<String, String> greeter) {
 		for (String name: Arrays.asList("Alice", "Bob", "Cathy")) {
 			System.out.println(greeter.apply(name));
 		}
 	}
 	
-	public static <T,U,V> Function<T,Function<U,V>> curry(BiFunction<T,U,V> bif){
+	public /*static*/ <T,U,V> Function<T,Function<U,V>> curry(BiFunction<T,U,V> bif){
 		return t -> (u -> bif.apply(t,u));
 	}
 	
@@ -43,10 +43,17 @@ public class Chapter2Tests {
 		
 		BiConsumer<String,String> printConcat = (left,right) -> System.out.println(left + right);
 	    
-		for (String name : Arrays.asList("Alice", "Bob", "Cathy")) {
+		for (String name : Arrays.asList("Alice", "Bob", "Cathy")) { 
 	      printConcat.accept("Goodbye, ", name);
 	    }
 	}
 	
+	
+	
+	@Test
+	public void implicitParticalFunction() {
+		BiFunction<String, String, String> concat = (a,b) -> a + b;
+		greetFolks(whom -> concat.apply("Hello, ", whom));
+	}
 
 }

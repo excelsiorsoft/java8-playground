@@ -1,13 +1,20 @@
 package com.excelsiorsoft.java_closures_lambda_book;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntSupplier;
+import java.util.function.ObjIntConsumer;
 import java.util.function.Predicate;
+import java.util.function.ToIntBiFunction;
+import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
 
 import org.junit.Assert;
@@ -98,5 +105,12 @@ public class Chapter2Tests {
 	
 	//Functions with primitives
 	IntFunction<String> intToString  = i -> Integer.toString(i);
+	ToIntFunction<String> parseInt = str -> Integer.valueOf(str);
+	IntPredicate isEven = i -> i%2==0;
+	ToIntBiFunction<String, String> maxLength = (left, right) -> Math.max(left.length(), right.length());
+	IntConsumer printInt = i -> System.out.println(Integer.toString(i));
+	ObjIntConsumer<String> printParsedIntWithRadix = (str, radix) -> System.out.println(Integer.parseInt(str, radix));
+	IntSupplier randomInt = () -> new Random().nextInt();
+	
 
 }

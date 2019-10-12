@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigInteger;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.function.BiConsumer;
@@ -147,5 +149,12 @@ public class Chapter2Tests {
 		assertEquals("b",lookup.apply(1));
 		assertNotNull(randomInt1.getAsInt());
 		print.accept(intToString.apply(randomInt1.getAsInt()));
+		
+		Path base = Paths.get(".");
+		Function<String, Path> resolvePath = base::resolve;
+	}
+	
+	public IntUnaryOperator compareAgainst(Integer compareLeft) {
+		return compareLeft::compareTo;
 	}
 }

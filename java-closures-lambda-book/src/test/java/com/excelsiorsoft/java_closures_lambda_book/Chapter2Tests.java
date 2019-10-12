@@ -124,5 +124,9 @@ public class Chapter2Tests {
 	IntToLongFunction intAsLong = i -> Integer.valueOf(i).longValue();
 	LongToIntFunction longAsInt = x -> Long.valueOf(x).intValue();
 	
+	IntFunction<String> intToString1 = Integer::toString;
+	ToIntFunction<String> parseInt1 = Integer::valueOf;
+	
+	
 
 }

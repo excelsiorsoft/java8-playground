@@ -1,5 +1,6 @@
 package com.excelsiorsoft.java_closures_lambda_book;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.function.BiConsumer;
@@ -124,9 +125,21 @@ public class Chapter2Tests {
 	IntToLongFunction intAsLong = i -> Integer.valueOf(i).longValue();
 	LongToIntFunction longAsInt = x -> Long.valueOf(x).intValue();
 	
+	//making static methods into lambda
 	IntFunction<String> intToString1 = Integer::toString;
 	ToIntFunction<String> parseInt1 = Integer::valueOf;
 	
+	//making constructors into lambda
+	Function<String, BigInteger> newBigInt = BigInteger::new;
 	
-
+	//making instance methods into lambda
+	Consumer<String> print = System.out::println;
+	UnaryOperator<String> makeGreeting = "Hello, "::concat;
+	IntFunction<String> lookup = Arrays.asList("a","b","c")::get;
+	
+	
+	@Test
+	public void testMethodRefs() {
+		Assert.assertEquals("b",lookup.apply(1));
+	}
 }

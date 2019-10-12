@@ -1,5 +1,8 @@
 package com.excelsiorsoft.java_closures_lambda_book;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
@@ -136,10 +139,13 @@ public class Chapter2Tests {
 	Consumer<String> print = System.out::println;
 	UnaryOperator<String> makeGreeting = "Hello, "::concat;
 	IntFunction<String> lookup = Arrays.asList("a","b","c")::get;
+	IntSupplier randomInt1 = new Random()::nextInt;
 	
 	
 	@Test
 	public void testMethodRefs() {
-		Assert.assertEquals("b",lookup.apply(1));
+		assertEquals("b",lookup.apply(1));
+		assertNotNull(randomInt1.getAsInt());
+		print.accept(intToString.apply(randomInt1.getAsInt()));
 	}
 }

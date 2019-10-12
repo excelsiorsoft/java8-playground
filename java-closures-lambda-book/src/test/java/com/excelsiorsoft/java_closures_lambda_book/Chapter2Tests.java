@@ -6,13 +6,17 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
+import java.util.function.DoubleToIntFunction;
 import java.util.function.Function;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
+import java.util.function.LongToIntFunction;
 import java.util.function.ObjIntConsumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntBiFunction;
@@ -115,6 +119,10 @@ public class Chapter2Tests {
 	IntSupplier randomInt = () -> new Random().nextInt();
 	IntUnaryOperator negateInt = i -> -1 * i;
 	IntBinaryOperator multiplyInt = (x,y) -> x*y;
+	IntToDoubleFunction intAsDouble = i -> Integer.valueOf(i).doubleValue();
+	DoubleToIntFunction doubleAsInt = d -> Double.valueOf(d).intValue();
+	IntToLongFunction intAsLong = i -> Integer.valueOf(i).longValue();
+	LongToIntFunction longAsInt = x -> Long.valueOf(x).intValue();
 	
 
 }

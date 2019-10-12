@@ -7,10 +7,12 @@ import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
+import java.util.function.IntUnaryOperator;
 import java.util.function.ObjIntConsumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntBiFunction;
@@ -111,6 +113,8 @@ public class Chapter2Tests {
 	IntConsumer printInt = i -> System.out.println(Integer.toString(i));
 	ObjIntConsumer<String> printParsedIntWithRadix = (str, radix) -> System.out.println(Integer.parseInt(str, radix));
 	IntSupplier randomInt = () -> new Random().nextInt();
+	IntUnaryOperator negateInt = i -> -1 * i;
+	IntBinaryOperator multiplyInt = (x,y) -> x*y;
 	
 
 }

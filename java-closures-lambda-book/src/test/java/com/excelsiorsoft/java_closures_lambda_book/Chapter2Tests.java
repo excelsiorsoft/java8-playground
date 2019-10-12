@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadFactory;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
@@ -157,4 +159,11 @@ public class Chapter2Tests {
 	public IntUnaryOperator compareAgainst(Integer compareLeft) {
 		return compareLeft::compareTo;
 	}
+	
+	//Lambdas as interface implementations
+	ThreadFactory t = Thread::new;
+	Runnable runMe = () -> System.out.println("Ran!");
+	Callable<Long> callMe = System::currentTimeMillis;
+	
+
 }

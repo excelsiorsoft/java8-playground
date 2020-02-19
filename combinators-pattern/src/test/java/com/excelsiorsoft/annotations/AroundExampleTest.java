@@ -1,8 +1,10 @@
-package com.excelsiorsoft.combinators;
+package com.excelsiorsoft.annotations;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.excelsiorsoft.annotations.AroundExample;
 
 public class AroundExampleTest {
 

@@ -1,4 +1,4 @@
-package com.excelsiorsoft.combinators;
+package com.excelsiorsoft.annotations;
 
 
 /**

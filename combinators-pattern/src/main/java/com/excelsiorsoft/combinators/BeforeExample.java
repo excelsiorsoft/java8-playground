@@ -39,8 +39,7 @@ public class BeforeExample {
 
         Consumer<BigDecimal> before = this::before;
 
-        Function<BigDecimal, String> addTaxDecorated =
-                Before.decorate(before, addTax);
+        Function<BigDecimal, String> addTaxDecorated = Before.decorate(before, addTax);
 
         BigDecimal argument = new BigDecimal("100");
         String result = addTaxDecorated.apply(argument);

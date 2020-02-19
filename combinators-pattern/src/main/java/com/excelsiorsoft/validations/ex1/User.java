@@ -1,4 +1,4 @@
-package com.excelsiorsoft.validations;
+package com.excelsiorsoft.validations.ex1;
 
 public class User {
 

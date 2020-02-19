@@ -1,10 +1,10 @@
 /**
  * 
  */
-package com.excelsiorsoft.validations;
+package com.excelsiorsoft.validations.ex1;
 
-import static com.excelsiorsoft.validations.ValidationExample.ValidationResult.invalid;
-import static com.excelsiorsoft.validations.ValidationExample.ValidationResult.valid;
+import static com.excelsiorsoft.validations.ex1.ValidationExample.ValidationResult.invalid;
+import static com.excelsiorsoft.validations.ex1.ValidationExample.ValidationResult.valid;
 
 import java.util.Arrays;
 import java.util.Objects;

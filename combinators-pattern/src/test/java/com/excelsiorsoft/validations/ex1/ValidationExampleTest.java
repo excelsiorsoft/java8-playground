@@ -1,18 +1,18 @@
-package com.excelsiorsoft.validations;
+package com.excelsiorsoft.validations.ex1;
 
-import static com.excelsiorsoft.validations.ValidationExample.UserValidation.eMailContainsAtSign;
-import static com.excelsiorsoft.validations.ValidationExample.UserValidation.nameIsNotEmpty;
-import static com.excelsiorsoft.validations.ValidationExample.WebValidation.all;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import com.excelsiorsoft.validations.ValidationExample.UserValidation;
-import com.excelsiorsoft.validations.ValidationExample.ValidationResult;
+import com.excelsiorsoft.validations.ex1.User;
+import com.excelsiorsoft.validations.ex1.ValidationExample.UserValidation;
+import com.excelsiorsoft.validations.ex1.ValidationExample.ValidationResult;
 
-import static com.excelsiorsoft.validations.ValidationExample.ValidationResult.invalid;
-import static com.excelsiorsoft.validations.ValidationExample.ValidationResult.valid;
-
+import static com.excelsiorsoft.validations.ex1.ValidationExample.UserValidation.eMailContainsAtSign;
+import static com.excelsiorsoft.validations.ex1.ValidationExample.UserValidation.nameIsNotEmpty;
+import static com.excelsiorsoft.validations.ex1.ValidationExample.ValidationResult.invalid;
+import static com.excelsiorsoft.validations.ex1.ValidationExample.ValidationResult.valid;
+import static com.excelsiorsoft.validations.ex1.ValidationExample.WebValidation.all;
 import static org.hamcrest.CoreMatchers.*;
 
 

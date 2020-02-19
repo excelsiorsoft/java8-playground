@@ -13,7 +13,7 @@ import com.excelsiorsoft.validations.ValidationExample.ValidationResult;
 import static com.excelsiorsoft.validations.ValidationExample.ValidationResult.invalid;
 import static com.excelsiorsoft.validations.ValidationExample.ValidationResult.valid;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 
 
 public class ValidationExampleTest {

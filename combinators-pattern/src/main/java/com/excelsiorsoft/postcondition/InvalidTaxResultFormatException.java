@@ -20,3 +20,4 @@ public class InvalidTaxResultFormatException extends RuntimeException {
 		this("Result of adding tax to amount " + amount + " has incorrect format: " + formatted);
 	}
 }
+

@@ -1,7 +1,13 @@
-### Inspired by the lectures in [Streams, Collectors and Optionals for Data Processing in Java Pluralsight Course](https://app.pluralsight.com/player?course=java-8-data-processing-streams-reflective.generics-optionals&author=jose-paumard&name=java-8-data-processing-streams-reflective.generics-optionals-m1&clip=7&mode=live).
-
-[https://www.youtube.com/watch?v=yddwA3458eo&amp=&t=3874s](https://www.youtube.com/watch?v=yddwA3458eo&amp=&t=3874s)
-
-[https://github.com/JosePaumard/devoxx-be-2017](https://github.com/JosePaumard/devoxx-be-2017)
 
 
+Lets assume you have a class Thingy. You want all subclasses of Thingy to be comparable, but just to the same subclass. Ie you want nails to be comparable to nails, but not bikes:
+
+`interface Thingy<T extends Thingy<T>> extends Comparable<T> {}
+
+class Nail implements Thingy<Nail> {
+    @Override public int compareTo(Nail o) { ... }
+}
+
+class Bike implements Thingy<Bike> {
+    @Override public int compareTo(Bike o) { ... }
+}`
